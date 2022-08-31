@@ -29,7 +29,6 @@ form {
 }
 
 form:after {
-  content: "";
   display: block;
   position: absolute;
   top: -5px;

@@ -32,9 +32,33 @@
       "day": "daffa",
       "description": "dafas",
       "points": "7",
-      "reminder": true,
+      "reminder": false,
       "isComplete": false,
       "id": 5
+    },
+    {
+      "text": "daf",
+      "day": "dfafda",
+      "description": "dfafda",
+      "points": "5",
+      "reminder": true,
+      "isComplete": false,
+      "username": "admin@admin.com",
+      "id": 6
+    }
+  ],
+  "users": [
+    {
+      "id": "admin@admin.com",
+      "name": "gfsfgs",
+      "email": "admin@admin.com",
+      "password": "admin123"
+    },
+    {
+      "id": "pog@pog",
+      "name": "",
+      "email": "pog@pog",
+      "password": "pog"
     }
   ]
 }

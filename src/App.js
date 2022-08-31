@@ -12,23 +12,51 @@ const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const adminUser = {
-    email: "admin@admin.com",
-    password: "admin123"
-  }
+  const [username, setUsername] = useState("")
 
   const [error, setError] = useState("");
 
-  const Login = details => {
+  const Login = async details => {
     console.log(details);
 
-    if (details.email == adminUser.email && details.password == adminUser.password) {
-      setIsLoggedIn(!isLoggedIn);
-
-    } else {
-      console.log("Details do not match!");
-      setError("Details do not match!")
+    const res = await fetch(`http://localhost:5000/users/${details.email}`)
+    // if user exists
+    if (res.ok) {
+      const data = await res.json()
+      if (details.password == data.password) {
+        setIsLoggedIn(true)
+        setUsername(details.email)
+      }
     }
+    // if user does not exist
+    else {
+      console.log("Username doesn't exist");
+      setError("Username doesn't exist")
+    }
+  }
+
+  const Register = async details => {
+    console.log(details)
+
+    // need to check if username already exists
+    // to check if username exists, make a fetch call to db await fetch("http://localhost:5000/users/${username}")
+    // if username already exists, prompt user that this is the case
+
+    // if username does not exist, execute password validation
+    // check if password is atleast 5 letters
+
+    const res = await fetch('http://localhost:5000/users', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ id: details.email, ...details })
+    })
+
+    // if password is good, make a post request to database to add the new user
+    setError("Account Successfully Created")
+
+
   }
 
   const Logout = () => {
@@ -42,14 +70,20 @@ const App = () => {
     }
 
     getTasks()
-  }, [])
+  }, [username])
 
   // Fetch Tasks
   const fetchTasks = async () => {
     const res = await fetch("http://localhost:5000/tasks")
     const data = await res.json()
 
-    return data
+    const tasks = data.filter(e => {
+      console.log(e.username)
+      console.log(username)
+      return e.username == username
+    })
+
+    return tasks
   }
   // Fetch Tasks
   const fetchTask = async (id) => {
@@ -66,8 +100,9 @@ const App = () => {
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify(task)
+      body: JSON.stringify({ ...task, username })
     })
+
 
     const data = await res.json()
 
@@ -76,6 +111,17 @@ const App = () => {
     // const id = Math.floor(Math.random() * 10000) + 1
     // const newTask = { id, ...task }
     // setTasks([...tasks, newTask])
+  }
+
+  // Add UserDetails
+  const loginForm = async (details) => {
+    const res = await fetch('http://localhost:5000/user', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(details)
+    })
   }
 
   // Delete Task
@@ -123,11 +169,7 @@ const App = () => {
 
     const data = await res.json()
 
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, isComplete: data.isComplete } : task
-      )
-    )
+
 
 
   }
@@ -138,15 +180,12 @@ const App = () => {
         <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
         {showAddTask && <AddTask onAdd={addTask} />}
         {tasks.length > 0 ? (<Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} onToggleComplete={toggleComplete} />) : ("No Tasks To Show")}
-        <Routes>
-          <Route path='/about' element={<About />} />
 
-        </Routes>
 
         <Footer />
         <button onClick={Logout}>Logout</button>
 
-      </div> : <div className="App"><LoginForm Login={Login} error={error} /></div>}
+      </div> : <div className="App"><LoginForm Login={Login} Register={Register} error={error} /></div>}
     </>
   );
 }
