@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const LoginForm = ({ Login, Register, error }) => {
-    const [details, setDetails] = useState({ name: "", email: "", password: "" });
+    const [details, setDetails] = useState({ username: "", password: "" });
     const [isOnLoginForm, setIsOnLoginForm] = useState(true)
 
     const loginSubmitHandler = e => {
@@ -23,12 +23,8 @@ const LoginForm = ({ Login, Register, error }) => {
                             <h2>Login</h2>
                             {(error != "") ? (<div className="error">{error}</div>) : ""}
                             <div className="form-group">
-                                <label htmlFor="name">Name:</label>
-                                <input type="text" name="name" id="name" onChange={e => setDetails({ ...details, name: e.target.value })} value={details.name} />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="email">Email:</label>
-                                <input type="email" name="email" id="email" onChange={e => setDetails({ ...details, email: e.target.value })} value={details.email} />
+                                <label htmlFor="username">Username:</label>
+                                <input type="username" name="username" id="username" onChange={e => setDetails({ ...details, username: e.target.value })} value={details.username} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password">Password:</label>
@@ -45,12 +41,8 @@ const LoginForm = ({ Login, Register, error }) => {
                             <h2>Register</h2>
                             {(error != "") ? (<div className="error">{error}</div>) : ""}
                             <div className="form-group">
-                                <label htmlFor="name">Name:</label>
-                                <input type="text" name="name" id="name" onChange={e => setDetails({ ...details, name: e.target.value })} value={details.name} />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="email">Email:</label>
-                                <input type="email" name="email" id="email" onChange={e => setDetails({ ...details, email: e.target.value })} value={details.email} />
+                                <label htmlFor="username">Username:</label>
+                                <input type="username" name="username" id="username" onChange={e => setDetails({ ...details, username: e.target.value })} value={details.username} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password">Password:</label>

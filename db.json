@@ -37,14 +37,24 @@
       "id": 5
     },
     {
-      "text": "daf",
-      "day": "dfafda",
-      "description": "dfafda",
+      "text": "fsgfs",
+      "day": "fgsgfs",
+      "description": "fgsg",
       "points": "5",
-      "reminder": true,
+      "reminder": false,
       "isComplete": false,
       "username": "admin@admin.com",
       "id": 6
+    },
+    {
+      "text": "gfsgfs",
+      "day": "gfsgsf",
+      "description": "fsgf",
+      "points": "3",
+      "reminder": true,
+      "isComplete": true,
+      "username": "admin@admin.com",
+      "id": 7
     }
   ],
   "users": [
